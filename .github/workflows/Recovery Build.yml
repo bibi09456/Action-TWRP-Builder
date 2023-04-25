@@ -14,15 +14,27 @@ on:
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
-        default: 'https://github.com/TeamWin/android_device_asus_I003D'
+        default: 'https://github.com/bibi09456/android_device_infinix_X6817-twrp'
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
         required: true
-        default: 'android-12.1'
+        default: 'main'
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/asus/I003D'
+        default: 'device/infinix/X6817'
+      VENDOR_TREE_URL:
+        description: 'VENDOR_TREE_URL'
+        required: false
+        default: 'https://github.com/bibi09456/vendor_infinix_X6817'
+      VENDOR_TREE_BRANCH:
+        description: 'VENDOR_TREE_BRANCH'
+        required: false
+        default: 'main'
+      VENDOR_PATH:
+        description: 'VENDOR_PATH'
+        required: false
+        default: 'vendor/infinix/X6817'
       COMMON_TREE_URL:
         description: 'COMMON_TREE_URL (if no common tree, leave blank)'
         required: false
@@ -32,11 +44,11 @@ on:
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'I003D'
+        default: 'X6817'
       MAKEFILE_NAME:
         description: 'MAKEFILE_NAME'
         required: true
-        default: 'twrp_I003D'
+        default: 'omni_X6817'
       BUILD_TARGET:
         description: 'BUILD_TARGET'
         required: true
@@ -114,6 +126,15 @@ jobs:
     - name: Clone device tree
       run: |
         git clone ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
+      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
+      
+    - name: Clone vendor tree
+      if: |
+        github.event.inputs.VENDOR_TREE_URL != null
+        && github.event.inputs.VENDOR_TREE_BRANCH != null
+        && github.event.inputs.VENDOR_PATH != null
+      run: |
+        git clone ${{ github.event.inputs.VENDOR_TREE_URL }} -b ${{ github.event.inputs.VENDOR_TREE_BRANCH }} ./${{ github.event.inputs.VENDOR_PATH }}
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Clone common tree
