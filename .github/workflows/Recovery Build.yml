@@ -27,20 +27,10 @@ on:
         description: 'VENDOR_TREE_URL'
         required: false
         default: 'https://github.com/bibi09456/vendor_infinix_X6817'
-      VENDOR_TREE_BRANCH:
-        description: 'VENDOR_TREE_BRANCH'
-        required: false
-        default: 'main'
       VENDOR_PATH:
         description: 'VENDOR_PATH'
         required: false
         default: 'vendor/infinix/X6817'
-      COMMON_TREE_URL:
-        description: 'COMMON_TREE_URL (if no common tree, leave blank)'
-        required: false
-      COMMON_PATH:
-        description: 'COMMON_PATH (if no common tree, leave blank)'
-        required: false
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
@@ -131,10 +121,9 @@ jobs:
     - name: Clone vendor tree
       if: |
         github.event.inputs.VENDOR_TREE_URL != null
-        && github.event.inputs.VENDOR_TREE_BRANCH != null
         && github.event.inputs.VENDOR_PATH != null
       run: |
-        git clone ${{ github.event.inputs.VENDOR_TREE_URL }} -b ${{ github.event.inputs.VENDOR_TREE_BRANCH }} ./${{ github.event.inputs.VENDOR_PATH }}
+        git clone ${{ github.event.inputs.VENDOR_TREE_URL }} -b main ./${{ github.event.inputs.VENDOR_PATH }}
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Clone common tree
