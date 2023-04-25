@@ -124,7 +124,7 @@ jobs:
         && github.event.inputs.VENDOR_PATH != null
       run: |
         git clone ${{ github.event.inputs.VENDOR_TREE_URL }} -b main ./${{ github.event.inputs.VENDOR_PATH }}
-        git clone https://github.com/omnirom/android_vendor_omni -b android-13.0 ./vendor/omni
+        git clone https://github.com/omnirom/android_vendor_omni -b android-12.1 ./vendor/omni
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Clone common tree
