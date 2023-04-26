@@ -125,6 +125,7 @@ jobs:
       run: |
         git clone ${{ github.event.inputs.VENDOR_TREE_URL }} -b main ./${{ github.event.inputs.VENDOR_PATH }}
         git clone https://github.com/omnirom/android_vendor_omni -b android-12.1 ./vendor/omni
+        sed -i 's/pctx = android.NewPackageContext("android\/soong\/generator")/pctx = android.packageContexts("android\/soong\/generator")/g' ./vendor/omni/build/soong/generator/generator.go
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Clone common tree
