@@ -125,10 +125,9 @@ jobs:
       run: |
         git clone ${{ github.event.inputs.VENDOR_TREE_URL }} -b main ./${{ github.event.inputs.VENDOR_PATH }}
         git clone https://github.com/omnirom/android_vendor_omni -b android-12.1 ./vendor/omni
-        sed -i 's/pctx = android.NewPackageContext("android\/soong\/generator")/pctx = android.packageContexts("android\/soong\/generator")/g' ./vendor/omni/build/soong/generator/generator.go
-        wget https://raw.githubusercontent.com/bibi09456/patches/main/package_ctx.go.patch
-        patch ./build/blueprint/package_ctx.go ./package_ctx.go.patch
-        rm ./package_ctx.go.patch
+        wget https://raw.githubusercontent.com/bibi09456/patches/main/generator.go.patch
+        patch ./vendor/omni/build/soong/generator/generator.go ./generator.go.patch
+        rm ./generator.go.patch
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Clone common tree
